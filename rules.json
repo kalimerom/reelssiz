@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "home": "/",
+  "navHide": [
+    "a[href=\"/reels/\"]",
+    "a[href^=\"/reels/?\"]"
+  ],
+  "blockedPaths": [
+    "^/reels/?$"
+  ],
+  "reelPath": "^/reels?/([^/]+)",
+  "reelScrollAllow": "[role=\"dialog\"]",
+  "feedPaths": [
+    "^/$"
+  ],
+  "postSelector": "article",
+  "feedReelLink": "a[href*=\"/reel/\"], a[href^=\"/reels/\"]:not([href=\"/reels/\"])",
+  "suggestedTexts": [
+    "Follow",
+    "Takip Et",
+    "Takip et"
+  ],
+  "explorePaths": [
+    "^/explore/?$"
+  ],
+  "exploreHide": "main a[href^=\"/p/\"], main a[href^=\"/reel/\"], main a[href^=\"/reels/\"]",
+  "css": ""
+}
