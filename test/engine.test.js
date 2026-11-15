@@ -125,6 +125,14 @@ function check(name, ok) {
     (await visible(page, '#strip')) && (await visible(page, '#suggested')));
   await page.context().close();
 
+  // Keşfet: varsayılan açık, ayar açılınca içerik gizlenir ama sayfa kalır
+  page = await open({}, '/explore/');
+  check('Keşfet varsayılan olarak dokunulmaz', await visible(page, '#normal a'));
+  await page.context().close();
+  page = await open({ hideExplore: true }, '/explore/');
+  check('Keşfet ayarı açıkken içerik kutuları gizli', !(await visible(page, '#normal a')) && (await visible(page, '#nav')));
+  await page.context().close();
+
   await browser.close();
   server.close();
   const failed = results.filter((r) => !r).length;

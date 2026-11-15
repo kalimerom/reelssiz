@@ -33,6 +33,7 @@ const ENGINE = String.raw`
 
   var blocked = compile(R.blockedPaths);
   var feedPaths = compile(R.feedPaths);
+  var explorePaths = compile(R.explorePaths);
   var reelRe = null;
   try { reelRe = new RegExp(R.reelPath); } catch (e) {}
 
@@ -196,6 +197,10 @@ const ENGINE = String.raw`
           if (isSuggested(post)) keep.push(post);
         });
       }
+    }
+
+    if (S.hideExplore && matchesAny(explorePaths, location.pathname)) {
+      all(R.exploreHide).forEach(function (el) { keep.push(el); });
     }
 
     // Instagram aynı öğeyi başka içerikle yeniden kullanabildiği için her seferinde

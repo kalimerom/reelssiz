@@ -21,6 +21,10 @@ export type Rules = {
   feedReelLink: string;
   /** Takip etmediğin hesaplardan gelen (önerilen) gönderilerdeki düğme yazıları. */
   suggestedTexts: string[];
+  /** Keşfet sayfasının yolları. */
+  explorePaths: string[];
+  /** Keşfet sayfasında gizlenecek içerik kutuları (arama kutusu kalır). */
+  exploreHide: string;
   /** Ek stil kuralları. */
   css: string;
 };
@@ -31,6 +35,7 @@ export type Settings = {
   lockReelScroll: boolean;
   hideFeedReels: boolean;
   hideSuggested: boolean;
+  hideExplore: boolean;
 };
 
 export const DEFAULT_RULES: Rules = {
@@ -44,6 +49,8 @@ export const DEFAULT_RULES: Rules = {
   postSelector: 'article',
   feedReelLink: 'a[href*="/reel/"], a[href^="/reels/"]:not([href="/reels/"])',
   suggestedTexts: ['Follow', 'Takip Et', 'Takip et'],
+  explorePaths: ['^/explore/?$'],
+  exploreHide: 'main a[href^="/p/"], main a[href^="/reel/"], main a[href^="/reels/"]',
   css: '',
 };
 
@@ -53,4 +60,5 @@ export const DEFAULT_SETTINGS: Settings = {
   lockReelScroll: true,
   hideFeedReels: true,
   hideSuggested: true,
+  hideExplore: false,
 };
