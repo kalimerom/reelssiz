@@ -19,7 +19,12 @@ import type {
 } from 'react-native-webview/lib/WebViewTypes';
 
 import { BRIDGE_SCRIPT } from './src/bridge';
+import { buildEngineScript } from './src/engine';
+import { DEFAULT_RULES, DEFAULT_SETTINGS } from './src/rules';
 import { HOME_URL, isInAppUrl, USER_AGENT } from './src/site';
+
+// Sayfaya enjekte edilen kod: önce gizleme motoru, sonra yenileme hareketi.
+const INJECTED = buildEngineScript(DEFAULT_RULES, DEFAULT_SETTINGS) + '\n' + BRIDGE_SCRIPT;
 
 export default function App() {
   const webRef = useRef<WebView<{}>>(null);
@@ -83,7 +88,9 @@ export default function App() {
           pullToRefreshEnabled
           setSupportMultipleWindows={false}
           overScrollMode="never"
-          injectedJavaScriptBeforeContentLoaded={BRIDGE_SCRIPT}
+          injectedJavaScriptBeforeContentLoaded={INJECTED}
+          // Bazı cihazlarda erken enjeksiyon çalışmazsa diye yedek; kod iki kez çalışmaya karşı korumalı.
+          injectedJavaScript={INJECTED}
           onMessage={onMessage}
           onNavigationStateChange={onNavChange}
           onShouldStartLoadWithRequest={onShouldStart}

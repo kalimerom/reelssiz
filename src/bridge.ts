@@ -1,6 +1,6 @@
 // Sayfa yüklenmeden önce enjekte edilen kod.
 // 1. aşama: Android'de "aşağı çekip yenile" hareketi (iOS bunu kendi desteğiyle yapar).
-// 2. aşamada Reels gizleme motoru buraya eklenecek.
+// Reels gizleme motoru ayrı dosyada: engine.ts
 export const BRIDGE_SCRIPT = `
 (function () {
   if (window.__reelssiz) return;
