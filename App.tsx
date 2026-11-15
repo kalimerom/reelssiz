@@ -60,6 +60,13 @@ export default function App() {
     };
   }, []);
 
+  // Güvenlik payı: hiçbir "yükleme bitti" bildirimi gelmese de perde en geç 10 saniyede kalkar.
+  useEffect(() => {
+    if (!loading) return;
+    const timer = setTimeout(() => setLoading(false), 10000);
+    return () => clearTimeout(timer);
+  }, [loading]);
+
   const injected = useMemo(() => (applied ? buildInjected(applied.config) : ''), [applied]);
 
   const changeSetting = useCallback((key: keyof Settings, value: boolean) => {
@@ -174,8 +181,13 @@ export default function App() {
           onMessage={onMessage}
           onNavigationStateChange={onNavChange}
           onShouldStartLoadWithRequest={onShouldStart}
-          onLoadStart={() => setLoading(true)}
+          // Yükleme perdesi yalnızca ilk açılışta ve bizim başlattığımız yenilemelerde gösterilir.
+          // Instagram sayfa içi geçişlerde "yükleme başladı" bildirip "bitti" bildirmeyebildiği için
+          // perde burada tekrar açılmaz; yoksa menüler arasında gezerken ekranda takılı kalır.
           onLoadEnd={() => setLoading(false)}
+          onLoadProgress={(e) => {
+            if (e.nativeEvent.progress >= 0.8) setLoading(false);
+          }}
           onError={() => {
             setLoading(false);
             setFailed(true);
